@@ -8,6 +8,17 @@ CREATE TABLE department (
     name VARCHAR(30) UNIQUE NOT NULL
 );
 
+CREATE TABLE role (
+	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    department_id INT UNSIGNED NOT NULL,
+    INDEX dep_id (department_id),
+    FOREIGN KEY (department_id) REFERENCES department(id),
+    -- foreign key references cascade 
+
+    title VARCHAR(30),
+    salary INT UNSIGNED NOT NULL 
+);
+
 CREATE TABLE employee (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,
@@ -20,16 +31,6 @@ CREATE TABLE employee (
     INDEX man_id (manager_id),
     FOREIGN KEY (manager_id) REFERENCES employee(id)
     -- foreign key references cascade 
-);
-
-CREATE TABLE role (
-    department_id INT UNSIGNED NOT NULL,
-    INDEX dep_id (department_id),
-    FOREIGN KEY (department_id) REFERENCES department(id),
-    -- foreign key references cascade 
-
-    title VARCHAR(30),
-    salary INT UNSIGNED NOT NULL 
 );
 
 INSERT INTO department (name)
