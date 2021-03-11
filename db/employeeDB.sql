@@ -47,29 +47,29 @@ VALUES ("Legal");
 
 
 INSERT INTO role (title, salary, department_id)
-VALUES ("Sales", 40000, 34);
+VALUES ("Sales-Person", 40000, 1);
 
 INSERT INTO role (title, salary, department_id)
-VALUES ("Engineering", 80000, 12);
+VALUES ("Engineer", 80000, 2);
 
 INSERT INTO role (title, salary, department_id)
-VALUES ("Finance", 100000, 26);
+VALUES ("Accountant", 100000, 3);
 
 INSERT INTO role (title, salary, department_id)
-VALUES ("Legal", 150000, 31);
+VALUES ("Lawyer", 150000, 4);
 
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Joe", "Han", 5, 23);
+VALUES ("Joe", "Han", 4, NULL);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Sarah", "Thomas", 7, 56);
+VALUES ("Sarah", "Thomas", 2, NULL);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("John", "Queen", 8, 63);
+VALUES ("John", "Queen", 1, 2);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Julie", "Robbinson", 3, 18);
+VALUES ("Julie", "Robbinson", 3, 1);
 
 
 
