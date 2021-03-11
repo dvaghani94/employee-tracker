@@ -7,7 +7,7 @@ connection.connect();
 
 // connection.connect((err) => {
 //   if (err) throw err;
-runSearch();
+  runSearch();
 // });
 
 function runSearch() {
@@ -35,7 +35,7 @@ function runSearch() {
         case "View by Department":
           viewDepartments();
           break;
-        case "View all roles":
+        case "View all Roles":
           viewRoles();
           break;
         case "Add employee":
@@ -44,7 +44,7 @@ function runSearch() {
         case "Add department":
           addDepartments();
           break;
-        case "Add role":
+        case "Add roles":
           addRoles();
           break;
         case "Update employee roles":
@@ -58,7 +58,8 @@ function runSearch() {
 }
 
 const viewEmployees = () => {
-  const query = "SELECT * FROM employee";
+  const query =
+    "SELECT * FROM employee";
   connection.query(query, (err, res) => {
     // if (err) throw err;
     console.table(res);
@@ -67,7 +68,8 @@ const viewEmployees = () => {
 };
 
 const viewDepartments = () => {
-  const query = "SELECT * FROM department";
+  const query =
+    "SELECT * FROM department";
   connection.query(query, (err, res) => {
     // if (err) throw err;
     console.table(res);
@@ -76,7 +78,8 @@ const viewDepartments = () => {
 };
 
 const viewRoles = () => {
-  const query = "SELECT * FROM roles";
+  const query =
+    "SELECT * FROM roles";
   connection.query(query, (err, res) => {
     // if (err) throw err;
     console.table(res);
@@ -106,18 +109,10 @@ const addEmployees = () => {
         name: "employeeManagerId",
         type: "input",
         message: "What is the employee's manager id?",
-      },
+      }
     ])
     .then((answer) => {
-      connection.query(
-        "INSERT INTO employee (first_name, last_name, roles_id, manager_id) VALUES(?)",
-        [
-          answer.employeeName,
-          answer.employeeLastName,
-          answer.employeeRoleId,
-          answer.employeeManagerId,
-        ],
-        (err, res) => {
+      connection.query("INSERT INTO employee (first_name, last_name, roles_id, manager_id) VALUES(?)", [answer.employeeName, answer.employeeLastName, answer.employeeRoleId, answer.employeeManagerId], (err, res) => {
           console.table(answer);
           // if (err) throw err;
           runSearch();
@@ -134,15 +129,11 @@ const addDepartments = () => {
       message: "What is the name of the new Department?",
     })
     .then((answer) => {
-      connection.query(
-        "INSERT INTO department (name) VALUES (?)",
-        answer.addinddepartment,
-        (err, res) => {
-          console.table(answer);
-          // if (err) throw err;
-          runSearch();
-        }
-      );
+      connection.query("INSERT INTO department (name) VALUES (?)", answer.addinddepartment, (err, res) => {
+        console.table(answer);
+        // if (err) throw err;
+        runSearch();
+      });
     });
 };
 
@@ -163,13 +154,10 @@ const addRoles = () => {
         name: "depId",
         type: "input",
         message: "What is the department id of the new role?",
-      },
+      }
     ])
     .then((answer) => {
-      connection.query(
-        "INSERT INTO roles (title, salary, department_id) VALUES(?) ",
-        [answer.newTitle, answer.newSalary, answer.depId],
-        (err, res) => {
+      connection.query("INSERT INTO roles (title, salary, department_id) VALUES(?) ", [answer.newTitle, answer.newSalary, answer.depId], (err, res) => {
           console.table(answer);
           // if (err) throw err;
           runSearch();
@@ -181,7 +169,7 @@ const addRoles = () => {
 const updateEmployeeRoles = () => {
   connection.query("SELECT (last_name) FROM employee", (err, res) => {
     // if (err) throw err;
-    console.table(res);
+        console.table(res);
   });
   inquirer
     .prompt([
@@ -189,15 +177,12 @@ const updateEmployeeRoles = () => {
         name: "updateEmployee",
         type: "input",
         message: "Which employee role would you like to update?",
-      },
+      }
     ])
     .then((answer) => {
-      connection.query(
-        "UPDATE employee SET WHERE roles_id = answer.updatedEmployee",
-        (err, res) => {
-          console.table(res);
-          runSearch();
-        }
-      );
+      connection.query("UPDATE employee SET WHERE roles_id = answer.updatedEmployee", (err,res) => {
+        console.table(res);
+        runSearch();
+      });
     });
 };
