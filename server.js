@@ -17,7 +17,7 @@ function runSearch() {
       name: "action",
       message: "What would you like to do?",
       choices: [
-        "View all Employess",
+        "View all Employees",
         "View by Department",
         "View all Roles",
         "Add employee",
@@ -29,7 +29,7 @@ function runSearch() {
     })
     .then((answer) => {
       switch (answer.action) {
-        case "View all Employess":
+        case "View all Employees":
           viewEmployees();
           break;
         case "View by Department":
@@ -111,14 +111,31 @@ const addEmployees = () => {
         message: "What is the employee's manager id?",
       }
     ])
-    .then((answer) => {
-      connection.query("INSERT INTO employee (first_name, last_name, roles_id, manager_id) VALUES(?)", [answer.employeeName, answer.employeeLastName, answer.employeeRoleId, answer.employeeManagerId], (err, res) => {
-          console.table(answer);
-          // if (err) throw err;
-          runSearch();
-        }
-      );
-    });
+//     .then((answer) => {
+//       const query = "INSERT INTO employee SET (first_name, last_name, roles_id, manager_id) VALUES (?)";
+//       connection.query(query, [answer.employeeName, answer.employeeLastName, answer.employeeRoleId, answer.employeeManagerId], (err, res) => {
+//           console.table(answer);
+//           // if (err) throw err;
+//           runSearch();
+//         }
+//       );
+//     });
+// };
+
+.then((answer) => {
+  const query = "SELECT first_name, last_name, roles_id, manager_id FROM employee WHERE roles_id BETWEEN ? AND ?";
+  connection.query(query, [answer.employeeName, answer.employeeLastName, answer.employeeRoleId, answer.employeeManagerId], (err, res) => {
+    res.forEach(({ first_name, last_name, roles_id, manager_id }) => {
+      console.log(
+        'first_name: ${answer.employeeName} || last_name: ${answer.employeeLastName} || roles_id: ${answer.employeeRoleId} || manager_id: ${answer.employeeManagerId}'
+      )
+    })
+      console.table(answer);
+      if (err) throw err;
+      runSearch();
+    }
+  );
+});
 };
 
 const addDepartments = () => {
@@ -157,7 +174,7 @@ const addRoles = () => {
       }
     ])
     .then((answer) => {
-      connection.query("INSERT INTO roles (title, salary, department_id) VALUES(?) ", [answer.newTitle, answer.newSalary, answer.depId], (err, res) => {
+      connection.query("INSERT INTO roles (title, salary, department_id) VALUES (?)", [answer.newTitle, answer.newSalary, answer.depId], (err, res) => {
           console.table(answer);
           // if (err) throw err;
           runSearch();
