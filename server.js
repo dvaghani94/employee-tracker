@@ -19,7 +19,7 @@ function runSearch() {
       choices: [
         "View all Employess",
         "View by Department",
-        "View all employees by Manager",
+        "View all Roles",
         "Add employee",
         "Add department",
         "Add roles",
@@ -35,8 +35,8 @@ function runSearch() {
         case "View by Department":
           viewDepartments();
           break;
-        case "View all employees by Manager":
-          viewManagers();
+        case "View all roles":
+          viewRoles();
           break;
         case "Add employee":
           addEmployees();
@@ -59,9 +59,9 @@ function runSearch() {
 
 const viewEmployees = () => {
   const query =
-    "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name, role.salary, employee.manager_id FROM employee";
+    "SELECT * FROM employee";
   connection.query(query, (err, res) => {
-    if (err) throw err;
+    // if (err) throw err;
     console.table(res);
     runSearch();
   });
@@ -69,19 +69,19 @@ const viewEmployees = () => {
 
 const viewDepartments = () => {
   const query =
-    "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name, role.salary, employee.manager_id FROM employee";
+    "SELECT * FROM department";
   connection.query(query, (err, res) => {
-    if (err) throw err;
+    // if (err) throw err;
     console.table(res);
     runSearch();
   });
 };
 
-const viewManagers = () => {
+const viewRoles = () => {
   const query =
-    "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name, role.salary, employee.manager_id FROM employee";
+    "SELECT * FROM role";
   connection.query(query, (err, res) => {
-    if (err) throw err;
+    // if (err) throw err;
     console.table(res);
     runSearch();
   });
@@ -112,9 +112,9 @@ const addEmployees = () => {
       }
     )
     .then((answer) => {
-      connection.query(query, [answer.employeeName, answer.employeeLastName, answer.employeeRoleId, answer.employeeManagerId], (err, res) => {
+      connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES(?)", [answer.employeeName, answer.employeeLastName, answer.employeeRoleId, answer.employeeManagerId], (err, res) => {
           console.log(res);
-          if (err) throw err;
+          // if (err) throw err;
           runSearch();
         }
       );
@@ -129,9 +129,9 @@ const addDepartments = () => {
       message: "What is the name of the new Department?",
     })
     .then((answer) => {
-      connection.query(query, [answer.addinddepartment], (err, res) => {
+      connection.query("INSERT INTO department (name) VALUES (?)", answer.addinddepartment, (err, res) => {
         console.log(res);
-        if (err) throw err;
+        // if (err) throw err;
         runSearch();
       });
     });
@@ -157,12 +157,9 @@ const addRoles = () => {
       }
     )
     .then((answer) => {
-      connection.query(
-        query,
-        [answer.newTitle, answer.newSalary, answer.depId],
-        (err, res) => {
+      connection.query("INSERT INTO role (title, salary, department_id) VALUES(?) ", [answer.newTitle, answer.newSalary, answer.depId], (err, res) => {
           console.log(res);
-          if (err) throw err;
+          // if (err) throw err;
           runSearch();
         }
       );
