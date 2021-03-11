@@ -111,32 +111,38 @@ const addEmployees = () => {
         message: "What is the employee's manager id?",
       }
     ])
-//     .then((answer) => {
-//       const query = "INSERT INTO employee SET (first_name, last_name, roles_id, manager_id) VALUES (?)";
-//       connection.query(query, [answer.employeeName, answer.employeeLastName, answer.employeeRoleId, answer.employeeManagerId], (err, res) => {
-//           console.table(answer);
-//           // if (err) throw err;
-//           runSearch();
-//         }
-//       );
-//     });
-// };
-
-.then((answer) => {
-  const query = "SELECT first_name, last_name, roles_id, manager_id FROM employee WHERE roles_id BETWEEN ? AND ?";
-  connection.query(query, [answer.employeeName, answer.employeeLastName, answer.employeeRoleId, answer.employeeManagerId], (err, res) => {
-    res.forEach(({ first_name, last_name, roles_id, manager_id }) => {
-      console.log(
-        'first_name: ${answer.employeeName} || last_name: ${answer.employeeLastName} || roles_id: ${answer.employeeRoleId} || manager_id: ${answer.employeeManagerId}'
-      )
-    })
-      console.table(answer);
-      if (err) throw err;
-      runSearch();
-    }
-  );
-});
+    .then((answer) => {
+      connection.query("INSERT INTO employee SET ?",
+      {
+        first_name: answer.employeeName,
+        last_name: answer.employeeLastName,
+        roles_id: answer.employeeRoleId,
+        manager_id: answer.employeeManagerId,
+       },
+        function(err) {
+          if (err) throw err;
+          console.table(answer);
+          runSearch();
+        }
+      );
+    });
 };
+
+// .then((answer) => {
+//   const query = "SELECT first_name, last_name, roles_id, manager_id FROM employee WHERE roles_id BETWEEN ? AND ?";
+//   connection.query(query, [answer.employeeName, answer.employeeLastName, answer.employeeRoleId, answer.employeeManagerId], (err, res) => {
+//     res.forEach(({ first_name, last_name, roles_id, manager_id }) => {
+//       console.log(
+//         'first_name: ${answer.employeeName} || last_name: ${answer.employeeLastName} || roles_id: ${answer.employeeRoleId} || manager_id: ${answer.employeeManagerId}'
+//       )
+//     })
+//       console.table(answer);
+//       if (err) throw err;
+//       runSearch();
+//     }
+//   );
+// });
+// };
 
 const addDepartments = () => {
   inquirer
