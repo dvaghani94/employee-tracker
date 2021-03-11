@@ -89,7 +89,7 @@ const viewRoles = () => {
 
 const addEmployees = () => {
   inquirer
-    .prompt(
+    .prompt([
       {
         name: "employeeName",
         type: "input",
@@ -110,10 +110,10 @@ const addEmployees = () => {
         type: "input",
         message: "What is the employee's manager id?",
       }
-    )
+    ])
     .then((answer) => {
-      connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES(?)", [answer.employeeName, answer.employeeLastName, answer.employeeRoleId, answer.employeeManagerId], (err, res) => {
-          console.log(res);
+      connection.query("INSERT INTO employee (first_name, last_name, roles_id, manager_id) VALUES(?)", [answer.employeeName, answer.employeeLastName, answer.employeeRoleId, answer.employeeManagerId], (err, res) => {
+          console.table(answer);
           // if (err) throw err;
           runSearch();
         }
@@ -130,7 +130,7 @@ const addDepartments = () => {
     })
     .then((answer) => {
       connection.query("INSERT INTO department (name) VALUES (?)", answer.addinddepartment, (err, res) => {
-        console.log(res);
+        console.table(answer);
         // if (err) throw err;
         runSearch();
       });
@@ -139,7 +139,7 @@ const addDepartments = () => {
 
 const addRoles = () => {
   inquirer
-    .prompt(
+    .prompt([
       {
         name: "newTitle",
         type: "input",
@@ -155,10 +155,10 @@ const addRoles = () => {
         type: "input",
         message: "What is the department id of the new role?",
       }
-    )
+    ])
     .then((answer) => {
-      connection.query("INSERT INTO role (title, salary, department_id) VALUES(?) ", [answer.newTitle, answer.newSalary, answer.depId], (err, res) => {
-          console.log(res);
+      connection.query("INSERT INTO roles (title, salary, department_id) VALUES(?) ", [answer.newTitle, answer.newSalary, answer.depId], (err, res) => {
+          console.table(answer);
           // if (err) throw err;
           runSearch();
         }
@@ -166,31 +166,31 @@ const addRoles = () => {
     });
 };
 
-// const updateEmployeeRoles = () => {
-//   inquirer
-//     .prompt({
-//       name: "artist",
-//       type: "input",
-//       message: "What artist would you like to search for?",
-//     })
-//     .then((answer) => {
-//       let query =
-//         "SELECT top_albums.year, top_albums.album, top_albums.position, top5000.song, top5000.artist ";
-//       query +=
-//         "FROM top_albums INNER JOIN top5000 ON (top_albums.artist = top5000.artist AND top_albums.year ";
-//       query +=
-//         "= top5000.year) WHERE (top_albums.artist = ? AND top5000.artist = ?) ORDER BY top_albums.year, top_albums.position";
+const updateEmployeeRoles = () => {
+  inquirer
+    .prompt({
+      name: "artist",
+      type: "input",
+      message: "What artist would you like to search for?",
+    })
+    .then((answer) => {
+      let query =
+        "SELECT top_albums.year, top_albums.album, top_albums.position, top5000.song, top5000.artist ";
+      query +=
+        "FROM top_albums INNER JOIN top5000 ON (top_albums.artist = top5000.artist AND top_albums.year ";
+      query +=
+        "= top5000.year) WHERE (top_albums.artist = ? AND top5000.artist = ?) ORDER BY top_albums.year, top_albums.position";
 
-//       connection.query(query, [answer.artist, answer.artist], (err, res) => {
-//         console.log(`${res.length} matches found!`);
-//         res.forEach(({ year, position, artist, song, album }, i) => {
-//           const num = i + 1;
-//           console.log(
-//             `${num} Year: ${year} Position: ${position} || Artist: ${artist} || Song: ${song} || Album: ${album}`
-//           );
-//         });
+      connection.query(query, [answer.artist, answer.artist], (err, res) => {
+        console.log(`${res.length} matches found!`);
+        res.forEach(({ year, position, artist, song, album }, i) => {
+          const num = i + 1;
+          console.log(
+            `${num} Year: ${year} Position: ${position} || Artist: ${artist} || Song: ${song} || Album: ${album}`
+          );
+        });
 
-//         runSearch();
-//       });
-//     });
-// };
+        runSearch();
+      });
+    });
+};
