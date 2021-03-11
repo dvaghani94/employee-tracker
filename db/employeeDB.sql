@@ -47,32 +47,32 @@ VALUES ("Legal");
 
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ();
+VALUES ("Joe", "Han", 3, 8);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ();
+VALUES ("Sarah", "Thomas", 2, 8);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ();
+VALUES ("John", "Queen", 1, 7);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ();
+VALUES ("Julie", "Robbinson", 9, 7);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ();
+VALUES ("Reed", "Turner", 6, 8);
 
 
 INSERT INTO role (title, salary, department_id)
-VALUES ("Sales");
+VALUES ("Sales", "$40,000", 34);
 
 INSERT INTO role (title, salary, department_id)
-VALUES ("Engineering");
+VALUES ("Engineering", "$80,000", 12);
 
 INSERT INTO role (title, salary, department_id)
-VALUES ("Finance");
+VALUES ("Finance", "$100,000", 26);
 
 INSERT INTO role (title, salary, department_id)
-VALUES ("Legal");
+VALUES ("Legal", "$150,000", 31);
 
 
 SELECT * FROM department;

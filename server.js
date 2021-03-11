@@ -3,10 +3,12 @@ const inquirer = require("inquirer");
 const connection = require("./db/connection");
 const ctable = require("console.table");
 
-connection.connect((err) => {
-  if (err) throw err;
-  runSearch();
-});
+connection.connect();
+
+// connection.connect((err) => {
+//   if (err) throw err;
+//   runSearch();
+// });
 
 function runSearch() {
   inquirer
