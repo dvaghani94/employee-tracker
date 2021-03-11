@@ -8,7 +8,7 @@ CREATE TABLE department (
     name VARCHAR(30) UNIQUE NOT NULL
 );
 
-CREATE TABLE role (
+CREATE TABLE roles (
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     department_id INT UNSIGNED NOT NULL,
     INDEX dep_id (department_id),
@@ -23,9 +23,9 @@ CREATE TABLE employee (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
-    role_id INT UNSIGNED NOT NULL,
-    INDEX role_id (role_id),
-    FOREIGN KEY (role_id) REFERENCES role(id),
+    roles_id INT UNSIGNED NOT NULL,
+    INDEX roles_id (roles_id),
+    FOREIGN KEY (roles_id) REFERENCES roles(id),
     -- foreign key references cascade 
     manager_id INT UNSIGNED,
     INDEX man_id (manager_id),
@@ -46,33 +46,33 @@ INSERT INTO department (name)
 VALUES ("Legal");
 
 
-INSERT INTO role (title, salary, department_id)
+INSERT INTO roles (title, salary, department_id)
 VALUES ("Sales-Person", 40000, 1);
 
-INSERT INTO role (title, salary, department_id)
+INSERT INTO roles (title, salary, department_id)
 VALUES ("Engineer", 80000, 2);
 
-INSERT INTO role (title, salary, department_id)
+INSERT INTO roles (title, salary, department_id)
 VALUES ("Accountant", 100000, 3);
 
-INSERT INTO role (title, salary, department_id)
+INSERT INTO roles (title, salary, department_id)
 VALUES ("Lawyer", 150000, 4);
 
 
-INSERT INTO employee (first_name, last_name, role_id, manager_id)
+INSERT INTO employee (first_name, last_name, roles_id, manager_id)
 VALUES ("Joe", "Han", 4, NULL);
 
-INSERT INTO employee (first_name, last_name, role_id, manager_id)
+INSERT INTO employee (first_name, last_name, roles_id, manager_id)
 VALUES ("Sarah", "Thomas", 2, NULL);
 
-INSERT INTO employee (first_name, last_name, role_id, manager_id)
+INSERT INTO employee (first_name, last_name, roles_id, manager_id)
 VALUES ("John", "Queen", 1, 2);
 
-INSERT INTO employee (first_name, last_name, role_id, manager_id)
+INSERT INTO employee (first_name, last_name, roles_id, manager_id)
 VALUES ("Julie", "Robbinson", 3, 1);
 
 
 
 SELECT * FROM department;
-SELECT * FROM role;
+SELECT * FROM roles;
 SELECT * FROM employee;

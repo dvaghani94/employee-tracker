@@ -79,7 +79,7 @@ const viewDepartments = () => {
 
 const viewRoles = () => {
   const query =
-    "SELECT * FROM role";
+    "SELECT * FROM roles";
   connection.query(query, (err, res) => {
     // if (err) throw err;
     console.table(res);
