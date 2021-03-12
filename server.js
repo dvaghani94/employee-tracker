@@ -182,27 +182,35 @@ const addRoles = () => {
     });
 };
 
+function findQuesry ()  {
+    connection.query(
+      "SELECT employee.id, employee.first_name, employee.last_name, roles.title, department.name AS department, roles.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employee LEFT JOIN roles on employee.roles_id = roles_id LEFT JOIN department on roles.department_id = department.id LEFT JOIN employee manager on manager.id = employee.manager_id;",
+      (err, res) => {
+        if (err) throw err;
+        console.table(res);
+      }
+    );
+  }
+
+  function findAllRoles (){ 
+    // starting from connection query
+  }
 const updateEmployeeRoles = () => {
-  connection.query(
-    "SELECT (employee.last_name, roles.title FROM employee JOIN roles ON employee.roles_id = roles.id;",
-    (err, res) => {
-      if (err) throw err;
-      console.table(res);
-    }
-  );
-  inquirer
-    .prompt([
-      {
-        name: "searchLastName",
-        type: "input",
-        message: "What is the employee's last name?",
-      },
-      {
-        name: "newTitle",
-        type: "input",
-        message: "What is the employee's new title?",
-      },
-    ])
+  const searching = findQuesry();
+  const choicesFind = searching.map(({id, first_name, last_name})=> ({
+    name:`${first_name} ${last_name}`,
+    value: id
+  }));
+
+  const {employeeId} = inquirer([{
+      type: "list",
+      name: "employeeId",
+      message: "Which employee do you choose",
+      choices: choicesFind
+  }])
+ 
+
+   
     .then((answer) => {
       connection.query(
         "UPDATE employee SET WHERE ?",
